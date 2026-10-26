@@ -1,54 +1,613 @@
 
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi" class="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NVS Investment</title>
-<style>
-body{margin:0;font-family:Arial,sans-serif;background:#f2f7f4;color:#163b2c}
-header{background:#124b35;color:white;padding:25px 18px;border-radius:0 0 22px 22px}
-h1{margin:10px 0}
-main{padding:18px;max-width:500px;margin:auto}
-.card{background:white;padding:20px;margin:15px 0;border-radius:16px;box-shadow:0 3px 12px #0001}
-button{background:#176b4d;color:white;border:0;border-radius:10px;padding:12px;width:100%;font-size:16px}
-input{width:100%;box-sizing:border-box;padding:12px;margin:8px 0 15px;border:1px solid #ccc;border-radius:9px}
-.small{font-size:13px;color:#666;line-height:1.5}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVS Real Money - 4% Daily Return Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                        },
+                        navy: {
+                            800: '#0b1329',
+                            900: '#050b1a',
+                            950: '#020612'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #050b1a;
+            color: #f3f4f6;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(234, 179, 8, 0.2);
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #facc15 50%, #ca8a04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-button {
+            background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
+            color: #050b1a;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(234, 179, 8, 0.3);
+        }
+        .gold-button:hover {
+            box-shadow: 0 6px 28px rgba(234, 179, 8, 0.5);
+            transform: translateY(-1px);
+        }
+    </style>
 </head>
-<body>
-<header>
-  <h1>NVS Investment</h1>
-  <p>Welcome to your dashboard</p>
-</header>
-<main>
-  <div class="card">
-    <h2>My Dashboard</h2>
-    <p>Demo Balance: ₹0.00</p>
-    <p class="small">This is a demonstration website. No real money is accepted or transferred.</p>
-  </div>
-  <div class="card">
-    <h2>Deposit Request</h2>
-    <label>Amount (₹)</label>
-    <input id="amount" type="number" min="1" placeholder="Enter amount">
-    <button onclick="requestDeposit()">Submit Demo Request</button>
-    <p id="message" class="small"></p>
-  </div>
-  <div class="card">
-    <h2>Contact</h2>
-    <p>Contact the website administrator for assistance.</p>
-  </div>
-</main>
-<script>
-function requestDeposit(){
-  const amount=Number(document.getElementById('amount').value);
-  const message=document.getElementById('message');
-  if(!Number.isFinite(amount)||amount<=0){
-    message.textContent='Please enter a valid amount.';
-    return;
-  }
-  message.textContent='Demo request only. No payment was made.';
-}
-</script>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Toast Alert -->
+    <div id="toast" class="fixed top-5 right-5 z-50 transform translate-y-[-150%] opacity-0 transition-all duration-300">
+        <div class="glass-panel rounded-2xl p-4 flex items-center gap-3 border-l-4 border-gold-500 shadow-2xl max-w-sm">
+            <i id="toastIcon" class="fa-solid fa-circle-check text-gold-400 text-xl"></i>
+            <div>
+                <p class="text-xs text-gray-400 font-medium" id="toastTitle">Notification</p>
+                <p class="text-sm font-semibold text-white" id="toastMsg">Message here...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Navigation -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-gold-500/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-gold-600 to-yellow-200 p-0.5">
+                        <div class="w-full h-full bg-navy-950 rounded-[10px] flex items-center justify-center">
+                            <span class="text-gold-400 font-black text-lg">NVS</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-lg font-extrabold gold-gradient-text block">NVS REAL MONEY</span>
+                        <span class="text-[10px] text-gray-400 font-semibold tracking-wider block -mt-1">4% DAILY RETURN PORTAL</span>
+                    </div>
+                </div>
+
+                <div class="flex gap-2 sm:gap-3">
+                    <a href="#deposit-section" class="gold-button px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-qrcode"></i> Deposit
+                    </a>
+                    <a href="#withdraw-section" class="px-4 py-2 rounded-xl bg-navy-800 hover:bg-navy-700 text-white font-semibold text-xs sm:text-sm border border-gray-700 flex items-center gap-1">
+                        <i class="fa-solid fa-wallet"></i> Withdraw
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Body Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- User Dashboard Section -->
+        <section id="dashboard" class="space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-white">Investor Dashboard / डैशबोर्ड</h2>
+                    <p class="text-xs text-gray-400">Real-time earnings tracking with 4% daily automated return</p>
+                </div>
+                <span class="px-3 py-1 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-bold flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Account Active
+                </span>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass-panel p-5 rounded-2xl border border-gold-500/30">
+                    <div class="flex justify-between items-center text-xs text-gray-400 mb-2">
+                        <span>Current Balance / बैलेंस</span>
+                        <i class="fa-solid fa-wallet text-gold-400"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-white" id="dashBalance">₹0.00</div>
+                    <p class="text-[10px] text-green-400 mt-1"><i class="fa-solid fa-arrow-trend-up mr-1"></i>Available to Withdraw</p>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-gray-800">
+                    <div class="flex justify-between items-center text-xs text-gray-400 mb-2">
+                        <span>Total Invested / कुल निवेश</span>
+                        <i class="fa-solid fa-chart-line text-blue-400"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-white" id="dashInvested">₹0.00</div>
+                    <p class="text-[10px] text-gray-400 mt-1">Earning 4% Daily Profit</p>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-gray-800">
+                    <div class="flex justify-between items-center text-xs text-gray-400 mb-2">
+                        <span>Daily Income / रोजाना आय (4%)</span>
+                        <i class="fa-solid fa-sack-dollar text-green-400"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-green-400" id="dashDailyYield">₹0.00</div>
+                    <p class="text-[10px] text-gray-400 mt-1">Calculated Every 24 Hours</p>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-gray-800">
+                    <div class="flex justify-between items-center text-xs text-gray-400 mb-2">
+                        <span>Total Withdrawn / कुल निकासी</span>
+                        <i class="fa-solid fa-money-bill-transfer text-purple-400"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-purple-400" id="dashWithdrawn">₹0.00</div>
+                    <p class="text-[10px] text-gray-400 mt-1">Transferred to Bank/UPI</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Investment Calculator Section -->
+        <section class="glass-panel p-6 sm:p-8 rounded-3xl border border-gold-500/20">
+            <div class="max-w-xl mx-auto text-center space-y-2 mb-8">
+                <h3 class="text-2xl font-black text-white">4% Daily ROI Calculator / रिटर्न कैलकुलेटर</h3>
+                <p class="text-xs text-gray-400">Calculate your guaranteed returns before investing</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-xs font-bold text-gray-300 mb-2">
+                            <span>Investment Amount (₹)</span>
+                            <span class="text-gold-400 font-black text-base" id="calcAmtDisplay">₹10,000</span>
+                        </div>
+                        <input type="range" id="calcRange" min="500" max="200000" step="500" value="10000" class="w-full h-2.5 bg-navy-950 rounded-lg appearance-none cursor-pointer accent-gold-500">
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-2">
+                        <button onclick="setCalcValue(1000)" class="py-1.5 rounded-lg bg-navy-800 hover:bg-gold-500/20 text-xs text-gray-300 font-semibold border border-gray-700">₹1,000</button>
+                        <button onclick="setCalcValue(5000)" class="py-1.5 rounded-lg bg-navy-800 hover:bg-gold-500/20 text-xs text-gray-300 font-semibold border border-gray-700">₹5,000</button>
+                        <button onclick="setCalcValue(25000)" class="py-1.5 rounded-lg bg-navy-800 hover:bg-gold-500/20 text-xs text-gray-300 font-semibold border border-gray-700">₹25,000</button>
+                        <button onclick="setCalcValue(50000)" class="py-1.5 rounded-lg bg-navy-800 hover:bg-gold-500/20 text-xs text-gray-300 font-semibold border border-gray-700">₹50,000</button>
+                    </div>
+                </div>
+
+                <div class="bg-navy-950/80 p-5 rounded-2xl border border-gray-800 space-y-3">
+                    <div class="flex justify-between text-xs">
+                        <span class="text-gray-400">Daily Return (4%):</span>
+                        <span class="text-gold-400 font-bold" id="calcDailyRes">₹400.00</span>
+                    </div>
+                    <div class="flex justify-between text-xs">
+                        <span class="text-gray-400">30-Day Total Profit:</span>
+                        <span class="text-green-400 font-bold" id="calcMonthlyRes">₹12,000.00</span>
+                    </div>
+                    <div class="pt-2 border-t border-gray-800 flex justify-between text-sm font-bold">
+                        <span class="text-gray-200">Total Capital + Profit (30 Days):</span>
+                        <span class="text-white font-black" id="calcTotalRes">₹22,000.00</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deposit & Bank Transfer Section -->
+        <section id="deposit-section" class="grid lg:grid-cols-12 gap-8">
+            <!-- Left: Payment Methods & QR -->
+            <div class="lg:col-span-6 glass-panel p-6 rounded-3xl space-y-6">
+                <div>
+                    <h3 class="text-xl font-black text-white flex items-center gap-2">
+                        <i class="fa-solid fa-building-columns text-gold-400"></i> Deposit Options / पैसे जमा करें
+                    </h3>
+                    <p class="text-xs text-gray-400 mt-1">Pay via PhonePe, GPay, Paytm, UPI ID or Direct Bank Transfer</p>
+                </div>
+
+                <!-- Official UPI Payment Box -->
+                <div class="bg-navy-950 p-4 rounded-2xl border border-gold-500/30 space-y-3">
+                    <div class="flex justify-between items-center text-xs font-bold text-gray-300">
+                        <span>Official UPI ID:</span>
+                        <span class="px-2 py-0.5 rounded bg-gold-500/10 text-gold-400 border border-gold-500/20">Active</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-navy-900 p-3 rounded-xl border border-gray-800">
+                        <span id="officialUpi" class="font-mono font-bold text-sm text-white">nvsrealmoney@upi</span>
+                        <button onclick="copyUpi()" class="px-3 py-1.5 bg-gold-500/20 hover:bg-gold-500/30 text-gold-400 text-xs font-bold rounded-lg border border-gold-500/40 transition-all">
+                            <i class="fa-solid fa-copy mr-1"></i> Copy UPI
+                        </button>
+                    </div>
+
+                    <!-- App Quick Icons -->
+                    <div class="flex justify-around pt-2 text-xs text-gray-400 font-semibold">
+                        <div class="flex flex-col items-center gap-1"><i class="fa-solid fa-mobile-screen text-lg text-purple-400"></i> PhonePe</div>
+                        <div class="flex flex-col items-center gap-1"><i class="fa-brands fa-google-pay text-lg text-blue-400"></i> Google Pay</div>
+                        <div class="flex flex-col items-center gap-1"><i class="fa-solid fa-wallet text-lg text-cyan-400"></i> Paytm</div>
+                    </div>
+                </div>
+
+                <!-- Bank Account Details Box -->
+                <div class="bg-navy-950 p-4 rounded-2xl border border-gray-800 space-y-2 text-xs">
+                    <h4 class="font-bold text-gray-200 border-b border-gray-800 pb-2 flex items-center justify-between">
+                        <span>Direct Bank Transfer Details</span>
+                        <i class="fa-solid fa-landmark text-gold-400"></i>
+                    </h4>
+                    <div class="flex justify-between py-1 border-b border-gray-800/50">
+                        <span class="text-gray-400">Bank Name:</span>
+                        <span class="font-semibold text-white">HDFC Bank</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-gray-800/50">
+                        <span class="text-gray-400">Account Holder:</span>
+                        <span class="font-semibold text-white">NVS REAL MONEY TRADING</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-gray-800/50">
+                        <span class="text-gray-400">Account Number:</span>
+                        <span class="font-mono font-bold text-gold-400">50200084920192</span>
+                    </div>
+                    <div class="flex justify-between py-1">
+                        <span class="text-gray-400">IFSC Code:</span>
+                        <span class="font-mono font-bold text-white">HDFC0001234</span>
+                    </div>
+                </div>
+
+                <!-- Placeholder QR Code -->
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-navy-950 border border-gray-800">
+                    <div class="w-20 h-20 bg-white p-1 rounded-xl shrink-0 flex items-center justify-center">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=nvsrealmoney@upi&pn=NVS%20Real%20Money" alt="Payment QR Code" class="w-full h-full object-contain">
+                    </div>
+                    <div class="text-xs text-gray-400 space-y-1">
+                        <p class="font-bold text-white">Scan QR Code to Pay</p>
+                        <p>UPI App se Scan karke payment karein aur niche UTR / Ref Number submit karein.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Deposit Form -->
+            <div class="lg:col-span-6 glass-panel p-6 rounded-3xl space-y-4 border border-gold-500/20">
+                <h3 class="text-xl font-black text-white flex items-center gap-2">
+                    <i class="fa-solid fa-paper-plane text-gold-400"></i> Submit Deposit / यूटीआर सबमिट करें
+                </h3>
+                <p class="text-xs text-gray-400">Payment karne ke baad 12-digit UTR/Ref ID yahan daalein</p>
+
+                <form id="depositForm" onsubmit="submitDeposit(event)" class="space-y-4 text-xs">
+                    <div>
+                        <label class="block font-semibold text-gray-300 mb-1">Deposit Amount (₹) / राशि</label>
+                        <input type="number" id="depAmount" min="500" placeholder="Minimum ₹500" required class="w-full bg-navy-950 border border-gray-700 rounded-xl p-3 text-white font-semibold outline-none focus:border-gold-500">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-300 mb-1">Payment Method Used</label>
+                        <select id="depMethod" class="w-full bg-navy-950 border border-gray-700 rounded-xl p-3 text-white font-semibold outline-none focus:border-gold-500">
+                            <option value="PhonePe UPI">PhonePe UPI</option>
+                            <option value="Google Pay">Google Pay</option>
+                            <option value="Paytm UPI">Paytm UPI</option>
+                            <option value="Bank Transfer">Direct Bank Transfer</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-300 mb-1">12-Digit UTR / Transaction Ref No.</label>
+                        <input type="text" id="depUtr" maxlength="12" placeholder="e.g. 409281920192" required class="w-full bg-navy-950 border border-gray-700 rounded-xl p-3 text-white font-mono font-semibold outline-none focus:border-gold-500">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-300 mb-1">Your Mobile / Contact Number</label>
+                        <input type="tel" id="depPhone" placeholder="Your Phone Number" required class="w-full bg-navy-950 border border-gray-700 rounded-xl p-3 text-white font-semibold outline-none focus:border-gold-500">
+                    </div>
+
+                    <button type="submit" class="w-full gold-button py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider mt-2">
+                        Submit Deposit Request
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Withdrawal Section -->
+        <section id="withdraw-section" class="glass-panel p-6 sm:p-8 rounded-3xl border border-gold-500/20 max-w-3xl mx-auto space-y-6">
+            <div class="border-b border-gray-800 pb-4">
+                <h3 class="text-2xl font-black text-white flex items-center gap-2">
+                    <i class="fa-solid fa-hand-holding-dollar text-gold-400"></i> Request Withdrawal / पैसे निकालें
+                </h3>
+                <p class="text-xs text-gray-400 mt-1">Withdraw daily profits directly to your UPI ID or Bank Account</p>
+            </div>
+
+            <form id="withdrawForm" onsubmit="submitWithdrawal(event)" class="space-y-4 text-xs">
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-gray-300 mb-1">Withdrawal Amount (₹)</label>
+                        <input type="number" id="wdAmount" min="200" placeholder="Minimum ₹200" required class="w-full bg-navy-950 border border-gray-700 rounded-xl p-3 text-white font-semibold outline-none focus:border-gold-500">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-gray-300 mb-1">Select Payment Method</label>
+                        <select id="wdMethod" onchange="toggleWdFields()" class="w-full bg-navy-950 border border-gray-700 rounded-xl p-3 text-white font-semibold outline-none focus:border-gold-500">
+                            <option value="UPI">PhonePe / Google Pay / Paytm UPI</option>
+                            <option value="BANK">Bank Account Transfer</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Dynamic Fields for UPI -->
+                <div id="wdUpiBox" class="space-y-3">
+                    <div>
+                        <label class="block font-semibold text-gray-300 mb-1">Enter UPI ID (PhonePe/GPay/Paytm)</label>
+                        <input type="text" id="wdUpiId" placeholder="e.g. mobile@ybl or mobile@paytm" class="w-full bg-navy-950 border border-gray-700 rounded-xl p-3 text-white font-semibold outline-none focus:border-gold-500">
+                    </div>
+                </div>
+
+                <!-- Dynamic Fields for Bank Account -->
+                <div id="wdBankBox" class="hidden space-y-3">
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold text-gray-300 mb-1">Account Holder Name</label>
+                            <input type="text" id="wdAccName" placeholder="Full Name as in Bank" class="w-full bg-navy-950 border border-gray-700 rounded-xl p-3 text-white font-semibold outline-none focus:border-gold-500">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-300 mb-1">Bank Name</label>
+                            <input type="text" id="wdBankName" placeholder="e.g. SBI, HDFC" class="w-full bg-navy-950 border border-gray-700 rounded-xl p-3 text-white font-semibold outline-none focus:border-gold-500">
+                        </div>
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold text-gray-300 mb-1">Account Number</label>
+                            <input type="text" id="wdAccNo" placeholder="Account Number" class="w-full bg-navy-950 border border-gray-700 rounded-xl p-3 text-white font-mono font-semibold outline-none focus:border-gold-500">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-300 mb-1">IFSC Code</label>
+                            <input type="text" id="wdIfsc" placeholder="e.g. SBIN0001234" class="w-full bg-navy-950 border border-gray-700 rounded-xl p-3 text-white font-mono font-semibold outline-none focus:border-gold-500">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full gold-button py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider mt-2">
+                    Submit Withdrawal Request
+                </button>
+            </form>
+        </section>
+
+        <!-- Transaction History Table Section -->
+        <section class="glass-panel p-6 sm:p-8 rounded-3xl border border-gold-500/20 space-y-4">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                <div>
+                    <h3 class="text-xl font-black text-white">Transaction History / लेन-देन का इतिहास</h3>
+                    <p class="text-xs text-gray-400">All deposits & withdrawals tracked in real-time</p>
+                </div>
+                <button onclick="clearHistory()" class="text-xs text-gray-400 hover:text-red-400 font-semibold">Clear History</button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-gray-300">
+                    <thead class="text-gray-400 border-b border-gray-800 bg-navy-950">
+                        <tr>
+                            <th class="py-3 px-4">Type</th>
+                            <th class="py-3 px-4">Amount</th>
+                            <th class="py-3 px-4">Method / Details</th>
+                            <th class="py-3 px-4">Date & Time</th>
+                            <th class="py-3 px-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="txnTableBody" class="divide-y divide-gray-800/50">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-navy-950 border-t border-gray-800 py-6 text-center text-xs text-gray-500">
+        <p>&copy; 2026 NVS Real Money. All rights reserved. 4% Daily ROI Platform.</p>
+    </footer>
+
+    <!-- Application Script -->
+    <script>
+        // State variables backed by localStorage
+        let state = JSON.parse(localStorage.getItem('nvs_state')) || {
+            balance: 0,
+            totalInvested: 0,
+            dailyYield: 0,
+            totalWithdrawn: 0,
+            transactions: []
+        };
+
+        function saveState() {
+            localStorage.setItem('nvs_state', JSON.stringify(state));
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            document.getElementById('dashBalance').innerText = '₹' + state.balance.toLocaleString('en-IN', {minimumFractionDigits: 2});
+            document.getElementById('dashInvested').innerText = '₹' + state.totalInvested.toLocaleString('en-IN', {minimumFractionDigits: 2});
+            document.getElementById('dashDailyYield').innerText = '₹' + state.dailyYield.toLocaleString('en-IN', {minimumFractionDigits: 2});
+            document.getElementById('dashWithdrawn').innerText = '₹' + state.totalWithdrawn.toLocaleString('en-IN', {minimumFractionDigits: 2});
+
+            renderTransactions();
+        }
+
+        // Calculator Logic
+        const range = document.getElementById('calcRange');
+        function updateCalc() {
+            const val = parseFloat(range.value);
+            const daily = val * 0.04;
+            const monthly = daily * 30;
+            const total = val + monthly;
+
+            document.getElementById('calcAmtDisplay').innerText = '₹' + val.toLocaleString('en-IN');
+            document.getElementById('calcDailyRes').innerText = '₹' + daily.toLocaleString('en-IN', {minimumFractionDigits: 2});
+            document.getElementById('calcMonthlyRes').innerText = '₹' + monthly.toLocaleString('en-IN', {minimumFractionDigits: 2});
+            document.getElementById('calcTotalRes').innerText = '₹' + total.toLocaleString('en-IN', {minimumFractionDigits: 2});
+        }
+        range.addEventListener('input', updateCalc);
+
+        function setCalcValue(val) {
+            range.value = val;
+            updateCalc();
+        }
+
+        // Copy UPI
+        function copyUpi() {
+            const upiText = document.getElementById('officialUpi').innerText;
+            navigator.clipboard.writeText(upiText);
+            showToast("Copied!", "UPI ID copied to clipboard: " + upiText);
+        }
+
+        // Toggle Withdrawal Method Form Fields
+        function toggleWdFields() {
+            const method = document.getElementById('wdMethod').value;
+            if (method === 'UPI') {
+                document.getElementById('wdUpiBox').classList.remove('hidden');
+                document.getElementById('wdBankBox').classList.add('hidden');
+            } else {
+                document.getElementById('wdUpiBox').classList.add('hidden');
+                document.getElementById('wdBankBox').classList.remove('hidden');
+            }
+        }
+
+        // Handle Deposit Submission
+        function submitDeposit(e) {
+            e.preventDefault();
+            const amt = parseFloat(document.getElementById('depAmount').value);
+            const method = document.getElementById('depMethod').value;
+            const utr = document.getElementById('depUtr').value;
+
+            if (amt < 500) {
+                showToast("Error", "Minimum deposit is ₹500");
+                return;
+            }
+
+            // Create Transaction record
+            const newTxn = {
+                id: 'DEP-' + Math.floor(100000 + Math.random() * 900000),
+                type: 'Deposit',
+                amount: amt,
+                details: `${method} (UTR: ${utr})`,
+                date: new Date().toLocaleString(),
+                status: 'Pending Review'
+            };
+
+            // Auto-approve simulation for demo purposes
+            setTimeout(() => {
+                newTxn.status = 'Approved';
+                state.totalInvested += amt;
+                state.dailyYield = state.totalInvested * 0.04;
+                state.balance += amt;
+                saveState();
+                showToast("Approved!", `₹${amt} Deposit approved! Daily earnings updated.`);
+            }, 3000);
+
+            state.transactions.unshift(newTxn);
+            saveState();
+
+            document.getElementById('depositForm').reset();
+            showToast("Submitted!", "Deposit request submitted. Verification in progress.");
+        }
+
+        // Handle Withdrawal Submission
+        function submitWithdrawal(e) {
+            e.preventDefault();
+            const amt = parseFloat(document.getElementById('wdAmount').value);
+            const method = document.getElementById('wdMethod').value;
+
+            if (amt > state.balance) {
+                showToast("Insufficient Balance", "You don't have enough balance to withdraw.");
+                return;
+            }
+            if (amt < 200) {
+                showToast("Error", "Minimum withdrawal amount is ₹200");
+                return;
+            }
+
+            let detailStr = "";
+            if (method === 'UPI') {
+                const upi = document.getElementById('wdUpiId').value;
+                if (!upi) { showToast("Error", "Please enter UPI ID"); return; }
+                detailStr = `UPI: ${upi}`;
+            } else {
+                const acc = document.getElementById('wdAccNo').value;
+                if (!acc) { showToast("Error", "Please enter Account Number"); return; }
+                detailStr = `Bank A/C: ${acc}`;
+            }
+
+            state.balance -= amt;
+            state.totalWithdrawn += amt;
+
+            const newTxn = {
+                id: 'WD-' + Math.floor(100000 + Math.random() * 900000),
+                type: 'Withdrawal',
+                amount: amt,
+                details: detailStr,
+                date: new Date().toLocaleString(),
+                status: 'Processing'
+            };
+
+            state.transactions.unshift(newTxn);
+            saveState();
+
+            document.getElementById('withdrawForm').reset();
+            showToast("Success!", `Withdrawal request of ₹${amt} submitted successfully.`);
+        }
+
+        // Render Transaction History
+        function renderTransactions() {
+            const tbody = document.getElementById('txnTableBody');
+            tbody.innerHTML = '';
+
+            if (state.transactions.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-gray-500">No transactions recorded yet</td></tr>`;
+                return;
+            }
+
+            state.transactions.forEach(txn => {
+                const tr = document.createElement('tr');
+                const isDep = txn.type === 'Deposit';
+                
+                let badgeColor = 'bg-yellow-500/10 text-yellow-400';
+                if (txn.status === 'Approved' || txn.status === 'Completed') badgeColor = 'bg-green-500/10 text-green-400';
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-bold ${isDep ? 'text-green-400' : 'text-purple-400'}">${txn.type}</td>
+                    <td class="py-3 px-4 font-bold text-white">₹${txn.amount.toLocaleString('en-IN')}</td>
+                    <td class="py-3 px-4 text-gray-400">${txn.details}</td>
+                    <td class="py-3 px-4 text-gray-400">${txn.date}</td>
+                    <td class="py-3 px-4"><span class="px-2 py-0.5 rounded ${badgeColor} text-[10px] font-bold uppercase">${txn.status}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function clearHistory() {
+            if (confirm("Are you sure you want to reset transaction history?")) {
+                state.transactions = [];
+                saveState();
+            }
+        }
+
+        // Toast Notification System
+        function showToast(title, msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').innerText = title;
+            document.getElementById('toastMsg').innerText = msg;
+
+            toast.classList.remove('translate-y-[-150%]', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-[-150%]', 'opacity-0');
+            }, 4000);
+        }
+
+        // Initial setup
+        updateCalc();
+        updateDashboard();
+    </script>
 </body>
 </html>
+```
