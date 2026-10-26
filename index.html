@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NVS Investment</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#f2f7f4;color:#163b2c}
+header{background:#124b35;color:white;padding:25px 18px;border-radius:0 0 22px 22px}
+h1{margin:10px 0}
+main{padding:18px;max-width:500px;margin:auto}
+.card{background:white;padding:20px;margin:15px 0;border-radius:16px;box-shadow:0 3px 12px #0001}
+button{background:#176b4d;color:white;border:0;border-radius:10px;padding:12px;width:100%;font-size:16px}
+input{width:100%;box-sizing:border-box;padding:12px;margin:8px 0 15px;border:1px solid #ccc;border-radius:9px}
+.small{font-size:13px;color:#666;line-height:1.5}
+</style>
+</head>
+<body>
+<header>
+  <h1>NVS Investment</h1>
+  <p>Welcome to your dashboard</p>
+</header>
+<main>
+  <div class="card">
+    <h2>My Dashboard</h2>
+    <p>Demo Balance: ₹0.00</p>
+    <p class="small">This is a demonstration website. No real money is accepted or transferred.</p>
+  </div>
+  <div class="card">
+    <h2>Deposit Request</h2>
+    <label>Amount (₹)</label>
+    <input id="amount" type="number" min="1" placeholder="Enter amount">
+    <button onclick="requestDeposit()">Submit Demo Request</button>
+    <p id="message" class="small"></p>
+  </div>
+  <div class="card">
+    <h2>Contact</h2>
+    <p>Contact the website administrator for assistance.</p>
+  </div>
+</main>
+<script>
+function requestDeposit(){
+  const amount=Number(document.getElementById('amount').value);
+  const message=document.getElementById('message');
+  if(!Number.isFinite(amount)||amount<=0){
+    message.textContent='Please enter a valid amount.';
+    return;
+  }
+  message.textContent='Demo request only. No payment was made.';
+}
+</script>
+</body>
+</html>
